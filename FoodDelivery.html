@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Delivery</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    header {
+      background-color: #ff4757;
+      color: white;
+      text-align: center;
+      padding: 1.5rem 0;
+    }
+    header h1 {
+      margin: 0;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .menu-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 20px 0;
+    }
+    .menu-item {
+      background-color: white;
+      width: 300px;
+      margin: 10px;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .menu-item h3 {
+      margin-bottom: 10px;
+    }
+    .menu-item p {
+      margin-bottom: 15px;
+    }
+    .menu-item button {
+      padding: 10px 20px;
+      background-color: #ff4757;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .menu-item button:hover {
+      background-color: #ff6b81;
+    }
+    .cart-section {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    .cart-item {
+      margin-bottom: 15px;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #2f3542;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Fast Eats Food Delivery</h1>
+    <nav>
+      <a href="#menu">Menu</a>
+      <a href="#cart">Cart</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <section id="menu" class="menu-section">
+      <div class="menu-item">
+        <h3>Burger</h3>
+        <p>Delicious beef burger with fresh vegetables.</p>
+        <p><strong>$8</strong></p>
+        <button onclick="addToCart('Burger', 8)">Add to Cart</button>
+      </div>
+      <div class="menu-item">
+        <h3>Pizza</h3>
+        <p>Cheesy pizza with your choice of toppings.</p>
+        <p><strong>$12</strong></p>
+        <button onclick="addToCart('Pizza', 12)">Add to Cart</button>
+      </div>
+      <div class="menu-item">
+        <h3>Pasta</h3>
+        <p>Creamy pasta with delicious Italian flavors.</p>
+        <p><strong>$10</strong></p>
+        <button onclick="addToCart('Pasta', 10)">Add to Cart</button>
+      </div>
+      <div class="menu-item">
+        <h3>Sushi</h3>
+        <p>Fresh sushi with premium quality ingredients.</p>
+        <p><strong>$15</strong></p>
+        <button onclick="addToCart('Sushi', 15)">Add to Cart</button>
+      </div>
+    </section>
+
+    <section id="cart" class="cart-section">
+      <h2>Your Cart</h2>
+      <div id="cart-items">
+        <!-- Cart items will appear here -->
+      </div>
+      <h3>Total: $<span id="cart-total">0</span></h3>
+      <button onclick="placeOrder()">Place Order</button>
+    </section>
+  </div>
+
+  <footer id="contact">
+    <p>Contact us at: <strong>support@fasteats.com</strong></p>
+    <p>Phone: +1 234 567 890</p>
+    <p>&copy; 2024 Fast Eats. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    var cart = [];
+    var total = 0;
+
+    function addToCart(item, price) {
+      cart.push({ item: item, price: price });
+      total += price;
+      updateCart();
+    }
+
+    function updateCart() {
+      var cartItems = document.getElementById("cart-items");
+      cartItems.innerHTML = "";  // Clear the cart before updating
+
+      cart.forEach(function(cartItem, index) {
+        cartItems.innerHTML += "<div class='cart-item'>" + cartItem.item + " - $" + cartItem.price + " <button onclick='removeFromCart(" + index + ")'>Remove</button></div>";
+      });
+
+      document.getElementById("cart-total").innerText = total;
+    }
+
+    function removeFromCart(index) {
+      total -= cart[index].price;
+      cart.splice(index, 1);  // Remove item from the cart
+      updateCart();
+    }
+
+    function placeOrder() {
+      if (cart.length === 0) {
+        alert("Your cart is empty. Please add items to your cart.");
+        return;
+      }
+      alert("Order placed! Thank you for your purchase.");
+      cart = [];
+      total = 0;
+      updateCart();  // Reset the cart
+    }
+  </script>
+
+</body>
+</html>
